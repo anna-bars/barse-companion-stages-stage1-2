@@ -216,7 +216,7 @@ h1{font-size:32px;font-weight:700;margin:0 0 10px;letter-spacing:-0.02em;color:v
   font-size:12.5px;background:var(--violet-dim);color:var(--violet-soft);padding:2px 7px;border-radius:5px;
 }
 
-.update-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px;}
+.update-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:8px;}
 @media (max-width:620px){.update-grid{grid-template-columns:1fr;}}
 .update-card{border-radius:14px;padding:22px;border:1px solid var(--line);background:var(--panel);}
 .update-card-title{font-family:var(--mono);font-size:11.5px;font-weight:600;margin-bottom:14px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.06em;}

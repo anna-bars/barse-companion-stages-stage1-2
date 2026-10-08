@@ -14,6 +14,9 @@ import dragonS1 from './assets/stage1/ART_Dragon.riv'
 import foxS2 from './assets/stage2/ART_Fox_Stage2.riv'
 import bearS2 from './assets/stage2/ART_Bear_Stage2.riv'
 import dragonS2 from './assets/stage2/ART_Dragon_Stage2.riv'
+import foxS3 from './assets/stage3/ART_Fox_Stage3.riv'
+import bearS3 from './assets/stage3/ART_Bear_Stage3.riv'
+import dragonS3 from './assets/stage3/ART_Dragon_Stage3.riv'
 
 // One .riv per companion per stage. The state machine schema is identical
 // across stages (isTalking · Celebrate · Blink · CompassTapped / MirrorTapped);
@@ -39,11 +42,20 @@ const STAGES = [
       { id: 'dragon', label: 'Dragon', file: 'ART_Dragon_Stage2.riv', src: dragonS2, artboard: 'STAGE2_ART_Dragon', stateMachine: 'Dragon Controller' },
     ],
   },
-  { id: 3, label: 'Stage 3', ready: false, characters: [] },
+  {
+    id: 3,
+    label: 'Stage 3',
+    ready: true,
+    characters: [
+      { id: 'fox', label: 'Fox', file: 'ART_Fox_Stage3.riv', src: foxS3, artboard: 'STAGE3_ART_Fox', stateMachine: 'Fox Controller' },
+      { id: 'bear', label: 'Bear', file: 'ART_Bear_Stage3.riv', src: bearS3, artboard: 'STAGE3_ART_Bear', stateMachine: 'Bear Controller' },
+      { id: 'dragon', label: 'Dragon', file: 'ART_Dragon_Stage3.riv', src: dragonS3, artboard: 'STAGE3_ART_Dragon', stateMachine: 'Dragon Controller' },
+    ],
+  },
 ]
 
 export default function App() {
-  const [stageId, setStageId] = useState(2)
+  const [stageId, setStageId] = useState(3)
   const [characterId, setCharacterId] = useState('fox')
   const stage = STAGES.find((s) => s.id === stageId)
   const character = stage.characters.find((c) => c.id === characterId)
@@ -284,7 +296,7 @@ function DocsBody() {
     <>
       <DocSection id="overview" eyebrow="Overview" title="Three companions, one schema, every stage">
         <p>
-          Fox, Bear and Dragon each ship as their own <code>.riv</code> per stage. Stage 2 reuses
+          Fox, Bear and Dragon each ship as their own <code>.riv</code> per stage. Stages 2 and 3 reuse
           the approved Stage 1 state machine exactly: same inputs, same animations (Idle, Talking,
           Celebrating, Blink) and same item interaction targets (Compass, Mirror). Only the
           artwork and the artboard name change, so switching stage in the app means swapping the{' '}
@@ -303,6 +315,13 @@ function DocsBody() {
             <ul>
               <li>Artboards <code>STAGE2_ART_Fox</code>, <code>STAGE2_ART_Bear</code>, <code>STAGE2_ART_Dragon</code></li>
               <li>Files in <code>src/assets/stage2/</code></li>
+            </ul>
+          </div>
+          <div className="update-card">
+            <div className="update-card-title">Stage 3</div>
+            <ul>
+              <li>Artboards <code>STAGE3_ART_Fox</code>, <code>STAGE3_ART_Bear</code>, <code>STAGE3_ART_Dragon</code></li>
+              <li>Files in <code>src/assets/stage3/</code></li>
             </ul>
           </div>
         </div>
@@ -327,8 +346,9 @@ function DocsBody() {
           </tbody>
         </table>
         <p>
-          Stage 3 follows the same pattern (<code>STAGE3_ART_*</code>) and will be added with
-          Milestone 2.
+          All three stages follow the same pattern: one file per companion, an artboard prefixed
+          with the stage (<code>STAGE2_ART_*</code>, <code>STAGE3_ART_*</code>) and the same
+          state machine name.
         </p>
       </DocSection>
 
@@ -403,7 +423,8 @@ function CodeBlock({ code }) {
 
 const JS_EXAMPLE = `import { Rive, Fit, Alignment, Layout, EventType } from '@rive-app/canvas'
 
-// Stage 2 Fox. For Stage 1 use 'ART_Fox.riv' + artboard 'ART_Fox'.
+// Stage 2 Fox. For Stage 1 use 'ART_Fox.riv' + artboard 'ART_Fox';
+// for Stage 3 use 'ART_Fox_Stage3.riv' + artboard 'STAGE3_ART_Fox'.
 const r = new Rive({
   src: '/ART_Fox_Stage2.riv',
   canvas: document.getElementById('fox-canvas'),
@@ -440,6 +461,11 @@ const COMPANIONS = {
     fox:    { resourceName: 'art_fox_stage2',    artboard: 'STAGE2_ART_Fox',    stateMachine: 'Fox Controller' },
     bear:   { resourceName: 'art_bear_stage2',   artboard: 'STAGE2_ART_Bear',   stateMachine: 'Bear Controller' },
     dragon: { resourceName: 'art_dragon_stage2', artboard: 'STAGE2_ART_Dragon', stateMachine: 'Dragon Controller' },
+  },
+  3: {
+    fox:    { resourceName: 'art_fox_stage3',    artboard: 'STAGE3_ART_Fox',    stateMachine: 'Fox Controller' },
+    bear:   { resourceName: 'art_bear_stage3',   artboard: 'STAGE3_ART_Bear',   stateMachine: 'Bear Controller' },
+    dragon: { resourceName: 'art_dragon_stage3', artboard: 'STAGE3_ART_Dragon', stateMachine: 'Dragon Controller' },
   },
 }
 
